@@ -58,8 +58,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void requestData(String uri) {
 
+        RequestPackage p = new RequestPackage(); //Mudando a uri para o RequestPackage
+        p.setMethod("GET");
+        p.setMethod("POST");
+        p.setUri(uri);
+        p.setParam("param1", "Value 1");
+        p.setParam("param2", "Value 2");
+        p.setParam("param3", "Value 3");
+        p.setParam("param4", "Value 4");
+        p.setParam("param5", "Value 5");
+
         MyTask task = new MyTask();
-        task.execute(uri);
+        task.execute(p);
     }
 
     protected void updateDisplay(String result) {
@@ -76,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class MyTask extends AsyncTask<String, String, String> {
+    private class MyTask extends AsyncTask<RequestPackage, String, String> {
 
         @Override
         protected void onPreExecute() {
@@ -87,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(RequestPackage... params) {
             String content = HttpManager.getData(params[0]);
             return content;
         }
